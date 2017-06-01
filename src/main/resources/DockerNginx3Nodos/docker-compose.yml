@@ -1,0 +1,50 @@
+version: "2"
+networks:
+  dbnet:
+    external:
+      name: dbnet
+
+services:
+    node1:
+        build: 
+          context: . 
+          dockerfile: ./Dockerfile1
+        networks:
+          - dbnet
+        ports:
+          - 10001:10001
+        volumes:
+          - /Users/ddelcastillo/Desktop/Nginx3Nodos/jar/:/tmp/jar/
+          - /Users/ddelcastillo/Desktop/Nginx3Nodos/config/:/tmp/jar/config/
+    node2:
+      build: 
+        context: . 
+        dockerfile: ./Dockerfile2
+      networks:
+         - dbnet
+      ports:
+         - 10002:10002
+      volumes:
+         - /Users/ddelcastillo/Desktop/Nginx3Nodos/jar/:/tmp/jar
+         - /Users/ddelcastillo/Desktop/Nginx3Nodos/config/:/tmp/jar/config/
+    node3:
+      build: 
+        context: . 
+        dockerfile: ./Dockerfile3
+      networks:
+        - dbnet
+      ports:
+        - 10003:10003
+      volumes:
+        - /Users/ddelcastillo/Desktop/Nginx3Nodos/jar/:/tmp/jar/
+        - /Users/ddelcastillo/Desktop/Nginx3Nodos/config/:/tmp/jar/config/
+    proxy:
+      build:
+        context:  ./nginx
+        dockerfile: Dockerfile
+      ports:
+        - "80:80"
+      links:
+          - node1:node1
+          - node2:node2
+          - node3:node3

@@ -1,0 +1,28 @@
+FROM centos:6.8
+
+MAINTAINER ddelcastillo <ddelcastillo@autentia.com>
+ 
+# Install packages
+RUN yum install -y unzip wget curl git
+ 
+# install Java 7
+RUN su -c "yum --assumeyes install java-1.7.0-openjdk-devel"
+
+# create Jar Folder
+RUN su -c "mkdir -p /tmp/jar"
+ 
+# Environment variables 
+ENV HOME /root/tmp
+ENV JAVA_HOME /usr/lib/jvm/java-1.7.0-openjdk.x86_64
+ENV PATH $JAVA_HOME/bin:$PATH
+ 
+
+VOLUME /tmp/jar
+ADD ./jar/app.jar app.jar
+
+VOLUME /tmp/jar/config
+WORKDIR /tmp/jar
+
+EXPOSE 10003
+ 
+ENTRYPOINT ["java","-jar","-Dserver.port=10003","app.jar","--nodo.numero=003"]
