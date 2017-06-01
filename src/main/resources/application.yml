@@ -1,0 +1,21 @@
+
+ datasource:
+    sample:
+      jdbcUrl: jdbc:mysql://192.168.99.100:3306/mysql
+      connectionTestQuery: SELECT 1 FROM DUAL
+      username: root
+      password: root
+      driver-class-name: com.mysql.jdbc.Driver
+      max-wait: 5000
+      max-active: 500
+      test-on-borrow: true
+      schema: mysql
+      name: sampleDataSource
+      
+
+ nodo: 
+   numero: '001'
+  
+  
+    
+  
