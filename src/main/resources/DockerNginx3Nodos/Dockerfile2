@@ -16,13 +16,12 @@ ENV HOME /root/tmp
 ENV JAVA_HOME /usr/lib/jvm/java-1.7.0-openjdk.x86_64
 ENV PATH $JAVA_HOME/bin:$PATH
  
-
 VOLUME /tmp/jar
-ADD ./jar/app.jar app.jar
+COPY ./jar/ /tmp/jar
 
 VOLUME /tmp/jar/config
 WORKDIR /tmp/jar
 
 EXPOSE 10002
  
-ENTRYPOINT ["java","-jar","-Dserver.port=10002","app.jar","--nodo.numero=002"]
+ENTRYPOINT ["java","-jar","-Dserver.port=10002","/tmp/jar/app.jar","--nodo.numero=002"]
